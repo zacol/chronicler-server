@@ -1,0 +1,12 @@
+{
+  "port": 3000,
+  "mongoUrl": "mongodb://localhost/db-name",
+  "client": ["organization name"],
+  "auth": {
+    "google": {
+      "clientID": "GoogleClientId",
+      "clientSecret": "GoogleClientSecret",
+      "callback": "http://localhost:3000/auth/google/callback"
+    }
+  }
+}
