@@ -5,8 +5,8 @@
   "auth": {
     "google": {
       "clientID": "GoogleClientId",
-      "clientSecret": "GoogleClientSecret",
-      "callback": "http://localhost:3000/auth/google/callback"
-    }
+      "clientSecret": "GoogleClientSecret"
+    },
+    "JWTSecret": "chronicler"
   }
 }
