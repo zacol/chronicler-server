@@ -8,5 +8,9 @@
       "clientSecret": "GoogleClientSecret"
     },
     "JWTSecret": "chronicler"
+  },
+  "pagination": {
+    "offset": 0,
+    "limit": 20
   }
 }
