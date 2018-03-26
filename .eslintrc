@@ -1,9 +1,6 @@
 {
   "extends": ["airbnb", "prettier"],
   "rules": {
-    "no-shadow": [
-      "error",
-      { "allow": ["done", "err", "cb", "resolve", "reject"] }
-    ]
+    "consistent-return": ["off"]
   }
 }
