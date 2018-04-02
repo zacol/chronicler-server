@@ -7,14 +7,10 @@
     "start-dev": "nodemon index.js",
     "format": "prettier --write '**/*.{js,json}'",
     "lint": "eslint '**/*.{js}' --quiet",
+    "load-fixtures": "node lib/fixtures/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "nodejs",
-    "express",
-    "mongoose",
-    "passport"
-  ],
+  "keywords": ["nodejs", "express", "mongoose", "passport"],
   "author": "Jacek Spławski",
   "license": "MIT",
   "engines": {
@@ -36,7 +32,8 @@
     "morgan": "^1.9.0",
     "passport": "^0.4.0",
     "passport-google-plus-token": "^2.1.0",
-    "passport-jwt": "^3.0.1"
+    "passport-jwt": "^3.0.1",
+    "pow-mongodb-fixtures": "^0.14.0"
   },
   "devDependencies": {
     "eslint": "^4.18.2",
