@@ -61,3 +61,6 @@ typings/
 production.json
 development.json
 testing.json
+
+#uploads directory
+uploads/
