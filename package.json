@@ -23,6 +23,7 @@
     "npm": "5.6.0"
   },
   "dependencies": {
+    "api-query-params": "^4.5.1",
     "body-parser": "^1.18.2",
     "crypto": "^1.0.1",
     "debug": "^3.1.0",

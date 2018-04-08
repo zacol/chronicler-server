@@ -13,5 +13,12 @@
   "pagination": {
     "offset": 0,
     "limit": 20
+  },
+  "aqp": {
+    "filterKey": "filter",
+    "limitKey": "limit",
+    "projectionKey": "select",
+    "skipKey": "offset",
+    "sortKey": "sort"
   }
 }
