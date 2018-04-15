@@ -19,6 +19,7 @@
     "limitKey": "limit",
     "projectionKey": "select",
     "skipKey": "offset",
-    "sortKey": "sort"
+    "sortKey": "sort",
+    "blacklist": ["populate"]
   }
 }
