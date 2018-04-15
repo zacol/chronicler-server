@@ -21,5 +21,6 @@
     "skipKey": "offset",
     "sortKey": "sort",
     "blacklist": ["populate"]
-  }
+  },
+  "uploadDirectory": "uploads"
 }
