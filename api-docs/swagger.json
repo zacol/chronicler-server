@@ -1,0 +1,412 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "Chronicler"
+  },
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Attachment",
+      "description": "API for attachments"
+    },
+    {
+      "name": "Attendee",
+      "description": "API for attendees"
+    },
+    {
+      "name": "Budget",
+      "description": "API for budgets"
+    },
+    {
+      "name": "Meetup",
+      "description": "API for meetups"
+    },
+    {
+      "name": "Room",
+      "description": "API for rooms"
+    },
+    {
+      "name": "User",
+      "description": "API for users"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json",
+    "multipart/form-data"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/attachments": {
+      "get": {
+        "tags": [
+          "Attachment"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/filterParam"
+          },
+          {
+            "$ref": "#/parameters/skipParam"
+          },
+          {
+            "$ref": "#/parameters/limitParam"
+          },
+          {
+            "$ref": "#/parameters/projectionParam"
+          },
+          {
+            "$ref": "#/parameters/sortParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of attachments.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "docs": {
+                  "type": "array",
+                  "description": "Array of documents.",
+                  "items": {
+                    "$ref": "#/definitions/Attachment"
+                  }
+                },
+                "total": {
+                  "type": "integer",
+                  "description": "Total number of documents in collection that match a query."
+                },
+                "limit": {
+                  "type": "integer",
+                  "description": "Limit that was used."
+                },
+                "offset": {
+                  "type": "integer",
+                  "description": "Offset that was used."
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/definitions/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/definitions/NotFound"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Attachment"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "meetup",
+            "in": "formData",
+            "description": "ID of the meetup. It's important to place meetup ID before files (https://github.com/expressjs/multer/issues/322)",
+            "type": "string"
+          },
+          {
+            "name": "files",
+            "in": "formData",
+            "description": "Single file or multiple files.",
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Array of uploaded attachments.",
+            "schema": {
+              "description": "Array of documents.",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Attachment"
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/definitions/Unauthorized"
+          }
+        }
+      }
+    },
+    "/attachments/{attachmentId}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "attachmentId",
+          "type": "integer",
+          "required": true,
+          "description": "ID of the attachment."
+        }
+      ],
+      "get": {
+        "tags": [
+          "Attachment"
+        ],
+        "responses": {
+          "200": {
+            "description": "A JSON object containing attachment information.",
+            "schema": {
+              "$ref": "#/definitions/Attachment"
+            }
+          },
+          "401": {
+            "$ref": "#/definitions/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/definitions/NotFound"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Attachment"
+        ],
+        "responses": {
+          "200": {
+            "description": "A JSON object containing attachment information.",
+            "schema": {
+              "$ref": "#/definitions/Attachment"
+            }
+          },
+          "401": {
+            "$ref": "#/definitions/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/definitions/NotFound"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Attachment": {
+      "type": "object",
+      "properties": {
+        "destination": {
+          "type": "string"
+        },
+        "encoding": {
+          "type": "string"
+        },
+        "filename": {
+          "type": "string"
+        },
+        "meetup": {
+          "$ref": "#/definitions/Meetup"
+        },
+        "mimetype": {
+          "type": "string"
+        },
+        "originalname": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "size": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "destination",
+        "encoding",
+        "filename",
+        "meetup",
+        "mimetype",
+        "originalname",
+        "path",
+        "size"
+      ]
+    },
+    "Attendee": {
+      "properties": {
+        "meetup": {
+          "$ref": "#/definitions/Meetup"
+        },
+        "user": {
+          "$ref": "#/definitions/User"
+        },
+        "status": {
+          "default": "needsAction",
+          "enum": [
+            "accepted",
+            "declined",
+            "needsAction",
+            "tentative"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "meetup",
+        "user",
+        "status"
+      ]
+    },
+    "Budget": {
+      "properties": {
+        "amount": {
+          "default": 0,
+          "type": "number"
+        },
+        "from": {
+          "default": "Date.now()",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "required": [
+        "amount",
+        "from"
+      ]
+    },
+    "Meetup": {
+      "properties": {
+        "attendees": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Attendee"
+          }
+        },
+        "description": {
+          "type": "string"
+        },
+        "endDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "expenses": {
+          "default": 0,
+          "type": "number"
+        },
+        "room": {
+          "$ref": "#/definitions/Room"
+        },
+        "speakers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/User"
+          }
+        },
+        "startDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "status": {
+          "default": "confirmed",
+          "enum": [
+            "cancelled",
+            "confirmed",
+            "tentative"
+          ],
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "description",
+        "endDate",
+        "expenses",
+        "room",
+        "startDate",
+        "status",
+        "title"
+      ]
+    },
+    "Room": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "capacity": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "name",
+        "capacity"
+      ]
+    },
+    "User": {
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "profiles": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "firstName",
+        "lastName",
+        "email",
+        "profiles"
+      ]
+    },
+    "NotFound": {
+      "description": "Not found"
+    },
+    "Unauthorized": {
+      "description": "Unauthorized"
+    }
+  },
+  "parameters": {
+    "filterParam": {
+      "in": "query",
+      "name": "filter",
+      "required": false,
+      "type": "string",
+      "description": "Query criteria."
+    },
+    "skipParam": {
+      "in": "query",
+      "name": "skip",
+      "required": false,
+      "type": "integer",
+      "minimum": 0,
+      "default": 0,
+      "description": "The number of items to skip before starting to collect the result set."
+    },
+    "limitParam": {
+      "in": "query",
+      "name": "limit",
+      "required": false,
+      "type": "integer",
+      "minimum": 0,
+      "default": 20,
+      "description": "The numbers of items to return."
+    },
+    "projectionParam": {
+      "in": "query",
+      "name": "projection",
+      "required": false,
+      "type": "string",
+      "description": "Fields to return (by default returns all fields)."
+    },
+    "sortParam": {
+      "in": "query",
+      "name": "sort",
+      "required": false,
+      "type": "string",
+      "description": "Sort order."
+    }
+  }
+}
